@@ -1,6 +1,6 @@
 const { db } = require("../util/admin");
 
-exports.getAllTodos = (request, response) => {
+exports.listAllTodo = (request, response) => {
   db.collection("todos")
     .orderBy("createdAt", "desc")
     .get()
@@ -10,7 +10,6 @@ exports.getAllTodos = (request, response) => {
         todos.push({
           todoId: doc.id,
           title: doc.data().title,
-          body: doc.data().body,
           createdAt: doc.data().createdAt,
         });
       });
@@ -19,5 +18,27 @@ exports.getAllTodos = (request, response) => {
     .catch((err) => {
       console.error(err);
       return response.status(500).json({ error: err.code });
+    });
+};
+
+exports.createTodo = (request, response) => {
+  if (request.body.title.trim() === "") {
+    return response.status(400).json({ title: "Must not be empty" });
+  }
+
+  const newTodoItem = {
+    title: request.body.title,
+    createdAt: new Date().toISOString(),
+  };
+  db.collection("todos")
+    .add(newTodoItem)
+    .then((doc) => {
+      const responseTodoItem = newTodoItem;
+      responseTodoItem.id = doc.id;
+      return response.json(responseTodoItem);
+    })
+    .catch((err) => {
+      response.status(500).json({ error: "Something went wrong" });
+      console.error(err);
     });
 };
