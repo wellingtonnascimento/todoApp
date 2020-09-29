@@ -89,6 +89,21 @@ exports.signUpUser = (request, response) => {
     });
 };
 
+exports.updateUserDetails = (request, response) => {
+  let document = db.collection("users").doc(`${request.user.email}`);
+  document
+    .update(request.body)
+    .then(() => {
+      response.json({ message: "Updated successfully" });
+    })
+    .catch((error) => {
+      console.error(error);
+      return response.status(500).json({
+        message: "Cannot Update the value",
+      });
+    });
+};
+
 deleteImage = (imageName) => {
   const bucket = admin.storage().bucket();
   const path = `${imageName}`;
