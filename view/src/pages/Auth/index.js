@@ -1,5 +1,7 @@
-import React from "react";
-import { Route, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
+
+import { AuthContext } from "../../contexts/auth-context";
 
 import LoginForm from "../../components/LoginForm";
 import CadastroForm from "../../components/CadastroForm";
@@ -8,6 +10,7 @@ import Logo from "../../assets/logo-rstcom-ok-.png";
 import "./styled.scss";
 
 export default function Auth() {
+  const { getCurrentAccount } = useContext(AuthContext);
   return (
     <Container fluid className="d-flex flex-grow-1 flex-row-reverse">
       <Row className="flex-fill flex-row">
@@ -21,8 +24,19 @@ export default function Auth() {
           md={6}
           className="bg-light justify-content-center align-items-center col-lg-4 col-md-6 col-12 d-flex"
         >
-          <Route path="/" exact component={LoginForm} />
-          <Route path="/cadastro" component={CadastroForm} />
+          <Route
+            path="/"
+            exact
+            render={() =>
+              !getCurrentAccount() ? <LoginForm /> : <Redirect to="/home" />
+            }
+          />
+          <Route
+            path="/cadastro"
+            render={() =>
+              !getCurrentAccount() ? <CadastroForm /> : <Redirect to="/home" />
+            }
+          />
         </Col>
       </Row>
     </Container>

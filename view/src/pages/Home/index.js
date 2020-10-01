@@ -1,13 +1,17 @@
-import React from "react";
-import { Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
 
 import { Container, Row, Col, Button } from "react-bootstrap";
+
+import { AuthContext } from "../../contexts/auth-context";
 
 import TodoForm from "../../components/TodoForm";
 import ProfileForm from "../../components/ProfileForm";
 import Logo from "../../assets/logo-rstcom-ok-.png";
 
 export default function Home({ history }) {
+  const { getCurrentAccount } = useContext(AuthContext);
+
   function onClickTodoList() {
     history.push("/home");
   }
@@ -53,11 +57,19 @@ export default function Home({ history }) {
           md={8}
           className="bg-light justify-content-center align-items-center d-flex"
         >
-          <div>
-            <a></a>
-          </div>
-          <Route path="/home" exact component={TodoForm} />
-          <Route path="/home/profile" component={ProfileForm} />
+          <Route
+            path="/home"
+            exact
+            render={() =>
+              getCurrentAccount() ? <TodoForm /> : <Redirect to="/" />
+            }
+          />
+          <Route
+            path="/home/profile"
+            render={() =>
+              getCurrentAccount() ? <ProfileForm /> : <Redirect to="/" />
+            }
+          />
         </Col>
       </Row>
     </Container>
