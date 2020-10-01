@@ -1,23 +1,48 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 import { AuthContext } from "../../contexts/auth-context";
 
+import api from "../../services/api";
+
+import "./styled.scss";
+
 import TodoForm from "../../components/TodoForm";
 import ProfileForm from "../../components/ProfileForm";
-import Logo from "../../assets/logo-rstcom-ok-.png";
+//import Logo from "../../assets/logo-rstcom-ok-.png";
 
 export default function Home({ history }) {
-  const { getCurrentAccount } = useContext(AuthContext);
+  const {
+    getCurrentAccount,
+    getCurrentAccountUser,
+    setCurrentAccountUser,
+  } = useContext(AuthContext);
 
+  //console.log(getCurrentAccount());
   function onClickTodoList() {
     history.push("/home");
   }
   function onClickProfile() {
     history.push("/home/profile");
   }
+
+  const user = getCurrentAccountUser() || {};
+  console.log({ user });
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const { data } = await api.get("user");
+
+        setCurrentAccountUser(data.userCredentials);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loadUser();
+  }, [setCurrentAccountUser]);
+
   return (
     <Container fluid className="d-flex flex-grow-1 flex-row-reverse">
       <Row className="flex-fill flex-row">
@@ -27,11 +52,18 @@ export default function Home({ history }) {
               Sair
             </Button>
           </div>
+
           <Row className="px-3 pb-5">
-            <img src={Logo} width="60" height="60" alt="" />
+            <img
+              src={user.imageUrl}
+              width="60"
+              height="60"
+              alt="avatar"
+              className="rounded-circle"
+            />
             <Col className="text-white">
-              <h4>Seu Name</h4>
-              <span>admin@admin.com</span>
+              <h4>{user.firstName}</h4>
+              <span>{user.email}</span>
             </Col>
           </Row>
 

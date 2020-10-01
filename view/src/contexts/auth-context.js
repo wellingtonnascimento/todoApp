@@ -16,6 +16,14 @@ const AuthContextProvider = ({ children }) => {
     localStorage.setItem("accessToken", accessToken);
   }
 
+  function setCurrentAccountUser(user) {
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+
+  function getCurrentAccountUser() {
+    return JSON.parse(localStorage.getItem("user"));
+  }
+
   async function login(body) {
     try {
       const response = (await authService.login(body)).data;
@@ -38,7 +46,14 @@ const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ getCurrentAccount, setCurrentAccount, login, signup }}
+      value={{
+        getCurrentAccount,
+        setCurrentAccount,
+        login,
+        signup,
+        setCurrentAccountUser,
+        getCurrentAccountUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
