@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import { Form, Button } from "react-bootstrap";
 
@@ -14,10 +13,6 @@ export default function LoginForm() {
       <Button className="col-12" type="submit">
         Entrar
       </Button>
-      <Link
-        to={"/cadastro"}
-        className="btn btn-link d-block mx-auto text-dark"
-      ></Link>
     </Form>
   );
 }
