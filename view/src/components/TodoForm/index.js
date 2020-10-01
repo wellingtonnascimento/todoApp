@@ -28,8 +28,8 @@ export default function LoginForm() {
         </Col>
         <Col className="">
           {todos.map((todo) => (
-            <Row keys={todo.todoId}>
-              <a className="text-dark  ">{todo.title}</a>
+            <Row key={todo.todoId}>
+              <span className="text-dark">{todo.title}</span>
             </Row>
           ))}
         </Col>
