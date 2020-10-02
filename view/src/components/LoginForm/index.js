@@ -1,9 +1,16 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import * as Yup from "yup";
 import { Form, Button } from "react-bootstrap";
 
 import { AuthContext } from "../../contexts/auth-context";
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Insira um email Valido")
+    .required("Email é obrigatorio"),
+  password: Yup.string().required("A senha é obrigatória"),
+});
 
 export default function LoginForm() {
   const { login } = useContext(AuthContext);
@@ -33,15 +40,17 @@ export default function LoginForm() {
   }
 
   return (
-    <Form className="col-10 border-radius" onSubmit={onSubmit}>
+    <Form schema={schema} className="col-10 border-radius" onSubmit={onSubmit}>
       <h5 className="text-center">Faça seu Login</h5>
       <Form.Control
+        name="email"
         onChange={handleEmailChange}
         type="email"
         placeholder="Enter email"
       />
       <br />
       <Form.Control
+        name="password"
         onChange={handlePasswordChange}
         type="password"
         placeholder="Password"
