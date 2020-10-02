@@ -44,6 +44,11 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
+  function logout() {
+    localStorage.clear();
+    history.push("/");
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -53,6 +58,7 @@ const AuthContextProvider = ({ children }) => {
         signup,
         setCurrentAccountUser,
         getCurrentAccountUser,
+        logout,
       }}
     >
       {children}

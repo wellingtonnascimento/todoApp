@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -18,6 +18,7 @@ export default function Home({ history }) {
     getCurrentAccount,
     getCurrentAccountUser,
     setCurrentAccountUser,
+    logout,
   } = useContext(AuthContext);
 
   //console.log(getCurrentAccount());
@@ -29,7 +30,7 @@ export default function Home({ history }) {
   }
 
   const user = getCurrentAccountUser() || {};
-  console.log({ user });
+
   useEffect(() => {
     async function loadUser() {
       try {
@@ -48,7 +49,7 @@ export default function Home({ history }) {
       <Row className="flex-fill flex-row">
         <Col>
           <div className="d-flex justify-content-end">
-            <Button variant="link" className="text-white">
+            <Button variant="button" onClick={logout} className="text-white">
               Sair
             </Button>
           </div>
@@ -87,7 +88,7 @@ export default function Home({ history }) {
           xs={12}
           lg={9}
           md={8}
-          className="bg-light justify-content-center align-items-center d-flex"
+          className="bg-light  align-items-center pt-5 "
         >
           <Route
             path="/home"
