@@ -43,7 +43,7 @@ export default function LoginForm() {
     <Row className=" ">
       <Col className="px-3 pb-5">
         <div className="  ">
-          <span className="text-danger">/Todo list</span>
+          <h4>Todo list</h4>
         </div>
         <Col className="px-4 pt-4 pb-5">
           <Row className="text-dark">
@@ -52,12 +52,12 @@ export default function LoginForm() {
         </Col>
         <Col className="">
           {todos.map((todo) => (
-            <div class="container" key={todo.todoId}>
-              <div class="row row-cols-4 pt-3">
-                <div class="col">
+            <div className="" key={todo.todoId}>
+              <div className="row row-cols-4  pt-2">
+                <div className="col">
                   <label className="text-dark">{todo.title}</label>
                 </div>
-                <div class="col">
+                <div className="col">
                   <button
                     className=" text-black"
                     onClick={() => handleDelete(todo.todoId)}

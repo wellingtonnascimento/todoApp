@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const config = {
-  baseURL: "http://localhost:5000/rstcom-8c4e1/us-central1/api",
+  baseURL: "https://us-central1-rstcom-8c4e1.cloudfunctions.net/api",
 };
 
 const api = axios.create(config);

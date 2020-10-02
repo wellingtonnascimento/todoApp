@@ -54,7 +54,6 @@ export default function ProfileForm() {
       await api.put("user", {
         firstName,
         email,
-        password,
       });
     } catch (error) {
       console.log(error);
