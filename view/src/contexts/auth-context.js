@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import authService from "../services/auth-service";
@@ -6,6 +6,7 @@ import authService from "../services/auth-service";
 export const AuthContext = React.createContext();
 
 const AuthContextProvider = ({ children }) => {
+  const [getCurrentAccountUser, setCurrentAccountUser] = useState({});
   const history = useHistory();
   function getCurrentAccount() {
     const accessToken = localStorage.getItem("accessToken");
@@ -16,13 +17,13 @@ const AuthContextProvider = ({ children }) => {
     localStorage.setItem("accessToken", accessToken);
   }
 
-  function setCurrentAccountUser(user) {
-    localStorage.setItem("user", JSON.stringify(user));
-  }
+  // function setCurrentAccountUser(user) {
+  //   localStorage.setItem("user", JSON.stringify(user));
+  // }
 
-  function getCurrentAccountUser() {
-    return JSON.parse(localStorage.getItem("user"));
-  }
+  // function getCurrentAccountUser() {
+  //   return JSON.parse(localStorage.getItem("user"));
+  // }
 
   async function login(body) {
     try {

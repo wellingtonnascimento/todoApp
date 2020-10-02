@@ -11,7 +11,7 @@ import "./styled.scss";
 
 import TodoForm from "../../components/TodoForm";
 import ProfileForm from "../../components/ProfileForm";
-//import Logo from "../../assets/logo-rstcom-ok-.png";
+import logo from "../../assets/logo-rstcom-ok-.png";
 
 export default function Home({ history }) {
   const {
@@ -29,7 +29,7 @@ export default function Home({ history }) {
     history.push("/home/profile");
   }
 
-  const user = getCurrentAccountUser() || {};
+  const user = getCurrentAccountUser || {};
 
   useEffect(() => {
     async function loadUser() {
@@ -56,7 +56,7 @@ export default function Home({ history }) {
 
           <Row className="px-3 pb-5">
             <img
-              src={user.imageUrl}
+              src={user.imageUrl ? user.imageUrl : logo}
               width="60"
               height="60"
               alt="avatar"
